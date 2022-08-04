@@ -11,7 +11,6 @@ RSpec.describe "merchant discounts index", type: :feature do
         discount3 = Discount.create!(percent: 15, quantity_threshold: 10, merchant_id: merchant_2.id)
 
         visit "/merchants/#{merchant_1.id}/discounts"
-        save_and_open_page
 
         expect(page).to_not have_content("Percent Discount: 15%")
         expect(page).to_not have_content("Quantity Threshold: 10")
@@ -19,8 +18,14 @@ RSpec.describe "merchant discounts index", type: :feature do
          within('#discounts') do
             expect(page.all(".discount")[0]).to have_content("Percent Discount: 20%")
             expect(page.all(".discount")[0]).to have_content("Quantity Threshold: 5")
+            expect(page.all(".discount")[0]).to have_content("View Discount #{discount1.id} Info")
             expect(page.all(".discount")[1]).to have_content("Percent Discount: 10%")
             expect(page.all(".discount")[1]).to have_content("Quantity Threshold: 3")
+            expect(page.all(".discount")[1]).to have_content("View Discount #{discount2.id} Info")
         end
+
+        click_on("View Discount #{discount1.id} Info")
+        expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/#{discount1.id}")
+        save_and_open_page
     end
 end 
