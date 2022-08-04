@@ -7,4 +7,7 @@ class MerchantDiscountsController < ApplicationController
     def show 
         @discount = Discount.find(params[:id])
     end 
+
+    def new 
+    end 
 end 
