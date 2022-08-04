@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "merchant discounts index", type: :feature do
+RSpec.describe "merchant discounts show page", type: :feature do
 
     it 'has a discounts for that merchant' do
         merchant_1 = Merchant.create!(name: "Schroeder-Jerde", created_at: Time.now, updated_at: Time.now)
