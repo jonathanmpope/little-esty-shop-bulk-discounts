@@ -13,8 +13,6 @@ Rails.application.routes.draw do
     resources :merchants, except: [:destroy]
     resources :invoices, only: [:index, :show, :edit, :update]
   end
-
+  
   resources :admin, only: [:index]
-
-
 end
