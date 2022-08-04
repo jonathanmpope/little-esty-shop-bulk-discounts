@@ -1,0 +1,26 @@
+require 'rails_helper'
+
+RSpec.describe "merchant discounts index", type: :feature do
+
+    it 'has a link to view all discounts in the merchant dashboard' do
+        merchant_1 = Merchant.create!(name: "Schroeder-Jerde", created_at: Time.now, updated_at: Time.now)
+        merchant_2 = Merchant.create!(name: "Durp", created_at: Time.now, updated_at: Time.now)
+
+        discount1 = Discount.create!(percent: 20, quantity_threshold: 5, merchant_id: merchant_1.id)
+        discount2 = Discount.create!(percent: 10, quantity_threshold: 3, merchant_id: merchant_1.id)
+        discount3 = Discount.create!(percent: 15, quantity_threshold: 10, merchant_id: merchant_2.id)
+
+        visit "/merchants/#{merchant_1.id}/discounts"
+        save_and_open_page
+
+        expect(page).to_not have_content("Percent Discount: 15%")
+        expect(page).to_not have_content("Quantity Threshold: 10")
+
+         within('#discounts') do
+            expect(page.all(".discount")[0]).to have_content("Percent Discount: 20%")
+            expect(page.all(".discount")[0]).to have_content("Quantity Threshold: 5")
+            expect(page.all(".discount")[1]).to have_content("Percent Discount: 10%")
+            expect(page.all(".discount")[1]).to have_content("Quantity Threshold: 3")
+        end
+    end
+end 
