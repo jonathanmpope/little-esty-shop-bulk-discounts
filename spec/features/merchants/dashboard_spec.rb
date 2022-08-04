@@ -230,6 +230,9 @@ RSpec.describe "merchant dashboard", type: :feature do
     invoice_item_5 = InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_4.id, quantity: 1, unit_price: item_1.unit_price, status: 1, created_at: Time.now, updated_at: Time.now)
     invoice_item_6 = InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice_4.id, quantity: 1, unit_price: item_2.unit_price, status: 1, created_at: Time.now, updated_at: Time.now)
 
+    discount1 = Discount.create!(percent: 20, quantity_threshold: 5, merchant_id: merchant_1.id)
+    discount2 = Discount.create!(percent: 10, quantity_threshold: 3, merchant_id: merchant_1.id)
+
     visit "/merchants/#{merchant_1.id}/dashboard"
 
     expect(page).to have_content("Bulk Discounts")

@@ -2,6 +2,7 @@
 <div id="merchant-links">
   <%= link_to "Items", "/merchants/#{@merchant.id}/items" %>
   <%= link_to "Invoices", "/merchants/#{@merchant.id}/invoices" %>
+  <%= link_to "Bulk Discounts", "/merchants/#{@merchant.id}/discounts" %>
 </div>
 <div id ="merchant-details">
   <p><%= @merchant.name %></p>
