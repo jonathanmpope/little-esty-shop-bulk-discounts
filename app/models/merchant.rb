@@ -4,6 +4,7 @@ class Merchant < ApplicationRecord
   validates_presence_of :updated_at
 
   has_many :items, dependent: :destroy
+  has_many :discounts, dependent: :destroy
   has_many :invoice_items, through: :items
   has_many :invoices, through: :invoice_items
   has_many :transactions, through: :invoices
