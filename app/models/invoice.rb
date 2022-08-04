@@ -25,6 +25,11 @@ class Invoice < ApplicationRecord
         .where(invoice_items:{invoice_id: id})
     end
 
+     def total_invoice_revenue(merchant_id)
+        items.select('sum(invoice_items.unit_price * invoice_items.quantity)as total')
+        .where(items: {merchant_id: merchant_id})
+    end
+
     def full_name
       customer.first_name + " " + customer.last_name
     end
