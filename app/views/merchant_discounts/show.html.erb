@@ -1,0 +1,4 @@
+<p>Discount ID: <%= @discount.id %></p>
+<p>Percent Discount: <%= @discount.percent %>%</p>
+<p>Quantity Threshold: <%= @discount.quantity_threshold %></p>
+<p><%= button_to "Update Discount: #{@discount.id}", "/merchants/#{@merchant.id}/discounts/#{@discount.id}/edit", method: :get %> </p>
