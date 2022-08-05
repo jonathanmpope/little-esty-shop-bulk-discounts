@@ -19,5 +19,6 @@
         <p> Status: <%= item.invoice_quantity(@invoice.id).first.status%> </p>
         </div>
     <% end %>
-
 </div>
+<p>Total Revenue Before Discounts: <%=number_to_currency(@invoice.total_price / 100) %></p>
+<%# <p>Total Merchant Revenue After Discounts: <%=number_to_currency(@invoice.total_invoice_revenue_with_discounts / 100) %></p> %>

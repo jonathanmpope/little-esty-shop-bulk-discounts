@@ -111,7 +111,7 @@ RSpec.describe 'invoices show page' do
         invoice_item_4 = InvoiceItem.create!(item_id: item_4.id, invoice_id: invoice_1.id, quantity: 10, unit_price: item_4.unit_price, status: 0, created_at: Time.now, updated_at: Time.now)
 
         discount1 = Discount.create!(percent: 10, quantity_threshold: 5, merchant_id: merchant_1.id)
-        discount1 = Discount.create!(percent: 20, quantity_threshold: 10, merchant_id: merchant_1.id)
+        discount2 = Discount.create!(percent: 20, quantity_threshold: 10, merchant_id: merchant_1.id)
 
         visit "/merchants/#{merchant_1.id}/invoices/#{invoice_1.id}"
 
