@@ -60,4 +60,19 @@ RSpec.describe "merchant discounts index", type: :feature do
         expect(page).to have_content("Percent Discount: 10%")
         expect(page).to have_content("Quantity Threshold: 3")
     end
+
+    it 'has an api call with the next three holidays' do
+        merchant_1 = Merchant.create!(name: "Schroeder-Jerde", created_at: Time.now, updated_at: Time.now)
+
+        visit "/merchants/#{merchant_1.id}/discounts"
+
+        expect(page).to have_content("Name: Labour Day")
+        expect(page).to have_content("Date: 2022-09-05")
+
+        expect(page).to have_content("Name: Columbus Day")
+        expect(page).to have_content("Date: 2022-10-10")
+
+        expect(page).to have_content("Name: Veterans Day")
+        expect(page).to have_content("Date: 2022-11-11")
+    end
 end 
