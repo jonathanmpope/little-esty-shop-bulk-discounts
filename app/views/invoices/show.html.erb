@@ -4,7 +4,9 @@
   <p>Customer Name: <%= @invoice.full_name %></p>
 <h3>Items on This Invoice:</h3>
   <% @total = 0 %>
+  <div id="merchant_invoice_items">
   <% @invoice.invoice_items_from_merchant(@merchant.id).each do |invoice_item| %>
+    <div class="merchant_invoice_item">
     <p>Item Name: <%= invoice_item.item.name %></p>
     <p>Quantity Ordered: <%= invoice_item.quantity %></p>
     <p>Item Price: <%= number_to_currency(invoice_item.unit_price / 100) %></p>
@@ -22,7 +24,9 @@
       <%= form.submit "Update Item Status" %>
       <%= form.hidden_field :invoice_item_id, value: invoice_item.id %>
     <% end %>
+    </div>
   <% end %>
+  </div>
 <p>Total Invoice Revenue: <%=number_to_currency(@invoice.total_price / 100) %></p>
 <p>Total Merchant Revenue Before Discounts: <%=number_to_currency(@invoice.total_invoice_revenue(@merchant.id) / 100) %></p>
 <p>Total Merchant Revenue After Discounts: <%=number_to_currency(@total / 100) %> </p> 
