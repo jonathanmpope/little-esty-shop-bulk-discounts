@@ -67,8 +67,13 @@ class Invoice < ApplicationRecord
       # binding.pry 
       invoice_items.joins(item: [merchant: :discounts]).distinct 
       .where('discounts.quantity_threshold <= invoice_items.quantity')
-      .select('items.*, (invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )) as total')
-      .group('items.id, total')
+      .select('sum(invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )) as total')
+      
+      # .select('items.*, sum(invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )) as total')
+      # .group('items.id, total')
+
+      # .where('discounts.percent > ? AND discounts.merchant_id = ?, max(discounts.percent), merchants.id')
+
       # .minimum('invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )')
     end 
 
