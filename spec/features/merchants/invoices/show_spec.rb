@@ -69,7 +69,7 @@ RSpec.describe 'invoices show page' do
 
       visit "/merchants/#{merchant_1.id}/invoices/#{invoice_1.id}"
 
-      expect(page).to have_content("Total Revenue: $120.00")
+      expect(page).to have_content("Total Invoice Revenue: $120.00")
     end
 
     it 'can update the invoice item status' do
@@ -114,9 +114,8 @@ RSpec.describe 'invoices show page' do
         discount1 = Discount.create!(percent: 20, quantity_threshold: 10, merchant_id: merchant_1.id)
 
         visit "/merchants/#{merchant_1.id}/invoices/#{invoice_1.id}"
-        save_and_open_page
 
-        expect(page).to have_content("Total Revenue Before Discounts: $700.00")
-        # expect(page).to have_content("Discounted Revenue: $605.00")
+        expect(page).to have_content("Total Merchant Revenue Before Discounts: $700.00")
+        expect(page).to have_content("Total Merchant Revenue After Discounts: $605.00")
      end 
 end

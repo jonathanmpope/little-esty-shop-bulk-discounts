@@ -3,13 +3,19 @@
   <p>Created At: <%= @invoice.created_at.strftime("%-m/%d/%y") %></p>
   <p>Customer Name: <%= @invoice.full_name %></p>
 <h3>Items on This Invoice:</h3>
-  <% @invoice.invoice_items.each do |invoice_item| %>
-    <id="invoice_item-<%= invoice_item.id %>">
-
+  <% @total = 0 %>
+  <% @invoice.invoice_items_from_merchant(@merchant.id).each do |invoice_item| %>
     <p>Item Name: <%= invoice_item.item.name %></p>
     <p>Quantity Ordered: <%= invoice_item.quantity %></p>
     <p>Item Price: <%= number_to_currency(invoice_item.unit_price / 100) %></p>
     <p>Invoice Item Status: <%= invoice_item.status %></p>
+    
+    <% if invoice_item.available_discounts.count != 0 %>
+      <p><%= link_to "Discount Page", "/merchants/#{@merchant.id}/discounts/#{@invoice.item_discounted_revenue(invoice_item.item_id)[0].discount_id}" %></p>
+      <% @total += @invoice.item_discounted_revenue(invoice_item.item_id)[0].total%>
+    <% else %>
+      <% @total += invoice_item.item_total_no_discounts %>
+    <% end %>
 
     <%= form_with url: "/merchants/#{invoice_item.item.merchant_id}/invoices/#{@invoice.id}", method: :patch, local: true do |form| %>
       <%= form.select :status, [["packaged"], ["pending"], ["shipped"]] %>
@@ -17,5 +23,6 @@
       <%= form.hidden_field :invoice_item_id, value: invoice_item.id %>
     <% end %>
   <% end %>
-<p>Total Revenue: <%=number_to_currency(@invoice.total_price / 100) %></p>
-<p>Total Revenue Before Discounts: <%=number_to_currency(@invoice.total_invoice_revenue(@merchant.id)[0].total / 100) %></p>
+<p>Total Invoice Revenue: <%=number_to_currency(@invoice.total_price / 100) %></p>
+<p>Total Merchant Revenue Before Discounts: <%=number_to_currency(@invoice.total_invoice_revenue(@merchant.id) / 100) %></p>
+<p>Total Merchant Revenue After Discounts: <%=number_to_currency(@total / 100) %> </p> 
