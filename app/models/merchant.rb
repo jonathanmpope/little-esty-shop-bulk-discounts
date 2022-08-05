@@ -9,7 +9,7 @@ class Merchant < ApplicationRecord
   has_many :invoices, through: :invoice_items
   has_many :transactions, through: :invoices
   has_many :customers, through: :invoices
-  has_many :transactions, through: :invoices
+  # has_many :transactions, through: :invoices
 
 
   def top_5_customers
@@ -36,4 +36,9 @@ class Merchant < ApplicationRecord
   def top_5_items
     top_5_items = self.items.joins(invoice_items: [:invoice]).where(invoices: {status: 2}).select("items.*, sum(invoice_items.quantity * invoice_items.unit_price)").group(:id).order(sum: :desc).limit(5).to_a
   end
+
+  # def invoice_items_belong_merchant
+  #   binding.pry 
+  # end 
+
 end
