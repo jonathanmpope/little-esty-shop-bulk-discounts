@@ -10,6 +10,15 @@
 <p>Date: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %> </p>
 <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %> </p>
 
+<% @total = 0 %>
+<% @invoice.invoice_items.each do |ii| %>
+    <% if ii.available_discounts.count != 0 %>
+        <% @total += @invoice.item_discounted_revenue(ii.item_id)[0].total%>
+    <% else %>
+        <% @total += ii.item_total_no_discounts %>
+    <% end %>
+<% end %>
+
 <div id= "items">
     <% @invoice.items.each do |item| %>
         <div class = "item">
@@ -20,5 +29,6 @@
         </div>
     <% end %>
 </div>
+
 <p>Total Revenue Before Discounts: <%=number_to_currency(@invoice.total_price / 100) %></p>
-<%# <p>Total Merchant Revenue After Discounts: <%=number_to_currency(@invoice.total_invoice_revenue_with_discounts / 100) %></p> %>
+<p>Total Revenue After Discounts: <%=number_to_currency(@total / 100) %></p>

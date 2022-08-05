@@ -33,17 +33,6 @@ class Invoice < ApplicationRecord
         .where(invoice_items:{invoice_id: id})
     end
 
-     # total discounted revenue for a merchant invoice 
-
-     def total_discounted_invoice_revenue(merchant_id)
-      # binding.pry 
-        invoice_items.joins(item: [merchant: :discounts]).distinct
-        # .where('discounts.quantity_threshold <= invoice_items.quantity', sum: )
-        # .select(Arel.sql("SUM(CASE WHEN discounts.quantity_threshold <= invoice_items.quantity THEN invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )
-        # ELSE invoice_items.unit_price * invoice_items.quantity"))
-        #  .where(items: {merchant_id: merchant_id})
-    end
-
     # total non-discounted revenue for a merchant invoice 
 
      def total_invoice_revenue(merchant_id)
@@ -77,11 +66,11 @@ class Invoice < ApplicationRecord
     def total_invoice_revenue_with_discounts
       # binding.pry 
       invoice_items.joins(item: [merchant: :discounts]).distinct 
-      .select('invoice_items.* as id, sum(invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )) as total')
       .where('discounts.quantity_threshold <= invoice_items.quantity')
-      .group('id.id, total')
-    
+      .select('items.*, (invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )) as total')
+      .group('items.id, total')
       # .minimum('invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )')
     end 
+
 
 end
