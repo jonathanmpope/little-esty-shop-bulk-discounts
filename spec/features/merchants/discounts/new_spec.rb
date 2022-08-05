@@ -14,6 +14,13 @@ RSpec.describe "merchant new discount page", type: :feature do
 
         expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/new")
         expect(page).to have_content("Error: Please fill out all required fields!")
+       
+        fill_in("Percent", with: "130")
+        fill_in("quantity_threshold", with: "20")
+        click_on("Create Discount")
+
+        expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/new")
+        expect(page).to have_content("Error: Please fill out all required fields!")
 
         fill_in("Percent", with: "30")
         fill_in("quantity_threshold", with: "20")
