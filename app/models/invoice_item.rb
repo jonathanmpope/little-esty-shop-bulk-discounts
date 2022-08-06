@@ -14,9 +14,9 @@ class InvoiceItem < ApplicationRecord
   def available_discounts
       item.merchant.discounts.where('discounts.quantity_threshold <= ?', quantity)
   end 
-
-  def item_total_no_discounts 
+  
+  def item_total_no_discounts
     unit_price * quantity
-  end 
+  end
 
 end
