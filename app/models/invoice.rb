@@ -88,22 +88,33 @@ class Invoice < ApplicationRecord
 
     def total_invoice_revenue_with_discounts
       # binding.pry 
+      # count = invoice_items.joins(item: [merchant: :discounts]).distinct.count
       # invoice_items.joins(item: [merchant: :discounts])
+      # .group('invoice_items.id')
+      # .select("invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 ) as total")
+      # .group('total, invoice_items.id')
+      # .order('invoice_items.id')
+      # .limit(count)
+      # .select('max(discounts.percent)')
+      # .where('discounts.percent >= ?', )
+      # .select('discounts.*').distinct.sum('invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )')
+      # .sum('CASE WHEN discounts.quantity_threshold <= invoice_items.quantity THEN invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 ) ELSE invoice_items.unit_price * invoice_items.quantity END')
+
+      # invoice_items.joins(item: :merchants)
       # .where('discounts.quantity_threshold <= invoice_items.quantity')
-      # .select('DISTINCT ON (invoice_item.item_id)')
-      # .where(discounts: {percent: maximum('discounts.percent')})
-      # .select('sum(invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )) as total')
-      # .select('min(invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )) as total')
-      
-      # maximum('discounts.percent', :conditions => ['discounts.quantity_threshold <= invoice_items.quantity'])
-      #  Person.minimum(:age, )
+      # 
+
       # .select('items.*, sum(invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )) as total')
       # .group('items.id, total')
 
+      # .select('sum(invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )) as total')
+      # .select('min(invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )) as total')
+      # .select("CASE WHEN discounts.quantity_threshold <= invoice_items.quantity THEN invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 ) ELSE invoice_items.unit_price * invoice_items.quantity END as total")
+
+      # .select('DISTINCT ON (invoice_item.item_id)')
+      # .where(discounts: {percent: maximum('discounts.percent')})      
+
       # .where('discounts.percent > ? AND discounts.merchant_id = ?, max(discounts.percent), merchants.id')
-      # .where(items: {merchant_id: merchant_id})
       # .minimum('invoice_items.unit_price * invoice_items.quantity * (1 - discounts.percent / 100.0 )')
-    end 
-
-
+    end  
 end
