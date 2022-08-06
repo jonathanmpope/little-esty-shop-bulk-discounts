@@ -117,7 +117,6 @@ RSpec.describe Invoice, type: :model do
 
       expect(invoice_1.items_discounted_revenue_total_single_merchant(merchant_1.id)).to eq(76800)
     end
-
   end 
 
   describe 'class methods' do
