@@ -115,7 +115,7 @@ RSpec.describe Invoice, type: :model do
       discount1 = Discount.create!(percent: 10, quantity_threshold: 5, merchant_id: merchant_1.id)
       discount2 = Discount.create!(percent: 20, quantity_threshold: 10, merchant_id: merchant_1.id)
 
-      expect(invoice_1.items_discounted_revenue_total).to eq(76800)
+      expect(invoice_1.items_discounted_revenue_total_single_merchant(merchant_1.id)).to eq(76800)
     end
 
   end 
