@@ -73,7 +73,6 @@ RSpec.describe 'admin invoice show page' do
         invoice_item_6 = InvoiceItem.create!(item_id: item_6.id, invoice_id: invoice_1.id, quantity: 6, unit_price: item_6.unit_price, status: 1, created_at: Time.now, updated_at: Time.now)
         invoice_item_7 = InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_2.id, quantity: 6, unit_price: item_6.unit_price, status: 1, created_at: Time.now, updated_at: Time.now)
 
-
         visit "admin/invoices/#{invoice_1.id}"
         expect(page).to have_content("Total Revenue: $1,330.00")   
     end
@@ -84,7 +83,6 @@ RSpec.describe 'admin invoice show page' do
 
         customer_1 = Customer.create!(first_name: "John", last_name: "Smith", created_at: Time.now, updated_at: Time.now)
     
-
         invoice_1 = Invoice.create!(status: 0, created_at: Time.now, updated_at: Time.now, customer_id: customer_1.id )
         invoice_2 = Invoice.create!(status: 0, created_at: Time.now, updated_at: Time.now, customer_id: customer_1.id )
 
@@ -172,5 +170,4 @@ RSpec.describe 'admin invoice show page' do
         expect(page).to have_content("Total Revenue Before Discounts: $1,710.00")
         expect(page).to have_content("Total Revenue After Discounts: $1,458.00")
      end 
-
 end

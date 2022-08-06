@@ -9,7 +9,6 @@ class InvoiceItem < ApplicationRecord
 
   belongs_to :item 
   belongs_to :invoice 
-  # has_many :transactions, through: :invoices 
 
   def available_discounts
       item.merchant.discounts.where('discounts.quantity_threshold <= ?', quantity)

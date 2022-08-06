@@ -37,7 +37,6 @@ RSpec.describe 'invoices show page' do
     invoice_item_4 = InvoiceItem.create!(item_id: item_4.id, invoice_id: invoice_2.id, quantity: 1, unit_price: item_1.unit_price, status: 0, created_at: Time.now, updated_at: Time.now)
 
     visit "/merchants/#{merchant_1.id}/invoices/#{invoice_1.id}"
-
       expect(page).to have_content("Item Name: #{item_1.name}")
       expect(page).to have_content("Quantity Ordered: #{invoice_item_1.quantity}")
       expect(page).to have_content("Item Price: $30.00")
