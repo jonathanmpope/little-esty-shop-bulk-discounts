@@ -16,7 +16,11 @@ class MerchantDiscountsController < ApplicationController
     def create
         merchant = Merchant.find(params[:merchant_id])
         discount = merchant.discounts.new(percent: params[:percent], quantity_threshold: params[:quantity_threshold])
-        if discount.save
+        # binding.pry 
+        if params[:percent].to_i == 0 || params[:percent].to_i > 99
+            redirect_to "/merchants/#{merchant.id}/discounts/new"
+            flash[:alert] = "Error: Discount percent can't be 0 or above 99!"
+        elsif discount.save
           redirect_to "/merchants/#{merchant.id}/discounts"
         else
           redirect_to "/merchants/#{merchant.id}/discounts/new"
