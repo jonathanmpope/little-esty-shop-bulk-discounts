@@ -13,6 +13,15 @@ class InvoiceItem < ApplicationRecord
   def available_discounts
       item.merchant.discounts.where('discounts.quantity_threshold <= ?', quantity)
   end 
+
+  def invoice_item_discount_id 
+    item.merchant.discounts
+    .where('discounts.quantity_threshold <= ?', quantity)
+    .select('discounts.id as did, max(discounts.percent) as max')
+    .group('did')
+    .order('max desc')
+    .limit(1)   
+  end 
   
   def item_total_no_discounts
     unit_price * quantity

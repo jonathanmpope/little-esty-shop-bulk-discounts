@@ -131,6 +131,7 @@ RSpec.describe 'invoices show page' do
 
         expect(page).to have_content("Total Merchant Revenue Before Discounts: $500.00")
         expect(page).to have_content("Total Merchant Revenue After Discounts: $440.00")
+        
      end 
 
       it 'has shows the total for an invoice - both total and discounted - example 3' do
