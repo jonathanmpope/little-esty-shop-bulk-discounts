@@ -48,7 +48,18 @@ class Invoice < ApplicationRecord
   # total max discount for items that quality for a discount 
 
     def discount_total
-      x = items.joins(merchant: :discounts)
+      items.joins(merchant: :discounts)
+      .where('discounts.quantity_threshold <= invoice_items.quantity') 
+      .select('items.*, max(invoice_items.unit_price * invoice_items.quantity * (discounts.percent / 100.0 )) as discounted')
+      .group('items.id')
+      .sum(&:discounted)
+    end  
+
+  # total max discount for items that quality for a discount for invoice items belonging to a specific merchant 
+
+    def discount_total_merchant(merchant_id)
+      items.joins(merchant: :discounts)
+      .where(items: {merchant_id: merchant_id})
       .where('discounts.quantity_threshold <= invoice_items.quantity') 
       .select('items.*, max(invoice_items.unit_price * invoice_items.quantity * (discounts.percent / 100.0 )) as discounted')
       .group('items.id')
