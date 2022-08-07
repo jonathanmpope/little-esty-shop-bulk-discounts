@@ -6,7 +6,7 @@
 <h3>Items on This Invoice:</h3>
   <div id="merchant_invoice_items">
 
-  <% @invoice.invoice_items_from_merchant(@merchant.id).each do |invoice_item| %>
+  <% @invoice.invoice_items_from_merchant(params[:merchant_id]).each do |invoice_item| %>
     <div class="merchant_invoice_item">
     <p>Item Name: <%= invoice_item.item.name %></p>
     <p>Quantity Ordered: <%= invoice_item.quantity %></p>
@@ -14,7 +14,7 @@
     <p>Invoice Item Status: <%= invoice_item.status %></p>
     
     <% if invoice_item.available_discounts.count != 0 %>
-      <p><%= link_to "Discount Page", "/merchants/#{@merchant.id}/discounts/#{@invoice.item_discounted_revenue(invoice_item.item_id)[0].discount_id}" %></p>
+      <p><%= link_to "Discount Page", "/merchants/#{params[:merchant_id]}/discounts/#{invoice_item.invoice_item_discount_id[0].did}" %></p>
     <% end %>
 
     <%= form_with url: "/merchants/#{invoice_item.item.merchant_id}/invoices/#{@invoice.id}", method: :patch, local: true do |form| %>
@@ -26,7 +26,7 @@
     </div>
   <% end %>
   </div>
-
+  
 <p>Total Invoice Revenue: <%=number_to_currency(@invoice.total_price / 100) %></p>
-<p>Total Merchant Revenue Before Discounts: <%=number_to_currency(@invoice.total_invoice_revenue(@merchant.id) / 100) %></p>
-<p>Total Merchant Revenue After Discounts: <%=number_to_currency(@invoice.items_discounted_revenue_total_single_merchant(@merchant.id) / 100) %> </p> 
+<p>Total Merchant Revenue Before Discounts: <%=number_to_currency(@invoice.total_invoice_revenue(params[:merchant_id]) / 100) %></p>
+<p>Total Merchant Revenue After Discounts: <%=number_to_currency((@invoice.total_invoice_revenue(params[:merchant_id]) - @invoice.discount_total_merchant(params[:merchant_id])) / 100) %> </p> 
