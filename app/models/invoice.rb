@@ -31,7 +31,7 @@ class Invoice < ApplicationRecord
 
     # total non-discounted revenue for a merchant invoice for only that merchants items  
 
-     def total_invoice_revenue(merchant_id)
+    def total_invoice_revenue(merchant_id)
         items
         .where(items: {merchant_id: merchant_id})
         .sum('invoice_items.unit_price * invoice_items.quantity')
@@ -45,7 +45,8 @@ class Invoice < ApplicationRecord
       invoice_items.sum('unit_price * quantity')
     end 
 
-  
+  # total max discount for items that quality for a discount 
+
     def discount_total
       x = items.joins(merchant: :discounts)
       .where('discounts.quantity_threshold <= invoice_items.quantity') 
