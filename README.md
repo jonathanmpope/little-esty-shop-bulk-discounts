@@ -1,8 +1,10 @@
-# Little Esty Shop
+# Little Esty Shop - Bulk Discounts
 
 ## Background and Description
 
-"Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
+"Little Esty Shop" was a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
+
+Bulk Discounts was built on top of the original group project to create a new class of items that. This project included building RESTful routes for database object creation lifecycle (create, edit, destroy, update). Complex Active Record queries are used to calculate new invoice sums based on the use of bulk discounts to invoices. 
 
 ## Learning Goals
 - Practice designing a normalized database schema and defining model relationships
