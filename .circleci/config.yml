@@ -1,0 +1,29 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2 
+
+jobs:
+  build:
+    working_directory: ~/little-etsy-shop-bulk-discounts 
+    docker:
+      - image: circleci/ruby:2.7.4
+        environment:
+          PGHOST: localhost
+          PGUSER: little-etsy-shop-bulk-discounts
+          RAILS_ENV: test
+      - image: postgres:14.4
+        environment:
+          POSTGRES_USER: little-etsy-shop-bulk-discounts
+          POSTGRES_DB: little-etsy-shop-bulk-discounts_test
+          POSTGRES_PASSWORD:
+    steps:
+      - checkout
+      - run:
+          name: little-etsy-shop-bulk-discounts
+          command: bundle -v
+      - ruby/bundle-install
+
+      - checkout
+      - run: bundle install --path vendor/bundle
+      - run: bundle exec rake db:migrate
+      - run: bundle exec rspec
